@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://www.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; form-action 'self'; frame-ancestors 'none';">
+<title>Administração · Portal da Escola</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css.css">
+</head>
+<body>
+<div class="page-loader" id="pageLoader" role="status" aria-live="polite" aria-label="Carregando administração">
+  <div class="loader-mark"><img src="WhatsApp%20Image%202026-09-02%20at%2011.27.01.jpeg" alt=""></div>
+  <span>Carregando administração</span>
+  <i aria-hidden="true"></i>
+</div>
+<div class="page admin-page">
+  <header>
+    <div>
+      <img class="school-logo" src="WhatsApp%20Image%202026-09-02%20at%2011.27.01.jpeg" alt="CETI Nonato Valente">
+      <a class="back-link" href="index.html">← Voltar ao portal</a>
+      <span class="eyebrow">Área restrita · administração</span>
+      <h1>Gestão da escola</h1>
+    </div>
+    <div class="header-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro/escuro" aria-pressed="false">🌙</button>
+      <span class="status-pill" id="connectionStatus">acesso restrito</span>
+      <button class="remove-event" id="logoutButton" type="button" hidden>Sair</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="portal-section admin-login" id="adminLogin">
+      <span class="eyebrow">Acesso restrito</span>
+      <h2>Entrar na administração</h2>
+      <form id="loginForm">
+        <label>Senha <input id="adminPassword" type="password" autocomplete="current-password" required></label>
+        <button class="action-button" type="submit">Entrar</button>
+        <small class="form-feedback" id="loginFeedback" role="alert"></small>
+      </form>
+    </section>
+
+    <section class="portal-section admin-section" id="adminContent" hidden>
+      <div class="section-heading"><div><span class="eyebrow">Configuração</span><h2>Controles do portal</h2></div><span class="muted">Alterações salvas neste dispositivo</span></div>
+      <div class="admin-grid">
+        <form class="admin-form" id="settingsForm">
+          <h3>Limites configuráveis</h3>
+          <label>Umidade mínima para alerta <span><input id="humidityLimit" type="number" min="0" max="100" value="30"> %</span></label>
+          <label>Temperatura máxima <span><input id="temperatureLimit" type="number" min="0" max="60" value="35"> °C</span></label>
+          <label>Ponto monitorado <span><input id="monitorPoint" type="text" value="Pátio central"></span></label>
+          <button class="action-button" type="submit">Salvar configurações</button>
+          <small class="form-feedback" id="settingsFeedback" role="status"></small>
+        </form>
+        <form class="admin-form" id="menuForm">
+          <h3>Atualização do cardápio</h3>
+          <label>Dia da semana <select id="menuDay"><option value="1">Segunda-feira</option><option value="2">Terça-feira</option><option value="3">Quarta-feira</option><option value="4">Quinta-feira</option><option value="5">Sexta-feira</option></select></label>
+          <div class="menu-day"><label>Prato principal <input id="menuMain" type="text" value="Arroz, feijão e frango assado"></label><label>Acompanhamento <input id="menuSide" type="text" value="Salada, legumes e fruta"></label><label>Horário <input id="menuTime" type="text" value="11:30–13:00"></label></div>
+          <button class="action-button" type="submit">Publicar cardápio</button>
+          <small class="form-feedback" id="menuFeedback" role="status"></small>
+        </form>
+        <form class="admin-form" id="classForm">
+          <h3>Cadastro de turmas</h3>
+          <label>Nome da turma <input id="className" type="text" placeholder="Ex.: 8º ano — manhã" required></label>
+          <label>Nível de ensino <select id="classYear"><option value="Ensino fundamental">Ensino fundamental</option><option value="Ensino médio">Ensino médio</option></select></label>
+          <label>Professor(a) <input id="classTeacher" type="text" placeholder="Nome do responsável" required></label>
+          <label>E-mail ou contato <input id="classContact" type="text" placeholder="Ex.: professor@escola.com.br"></label>
+          <label>Alunos <input id="classStudents" type="number" min="1" placeholder="Quantidade" required></label>
+          <label>Materiais da disciplina <textarea id="classMaterials" rows="3" placeholder="Lista de materiais, livros ou links"></textarea></label>
+          <label>Tarefas importantes <textarea id="classTasks" rows="3" placeholder="Entrega de trabalho, prova ou tarefa"></textarea></label>
+          <label>Observações da semana <textarea id="classObservations" rows="3" placeholder="Orientações para a turma"></textarea></label>
+          <button class="action-button" type="submit">Cadastrar turma</button>
+          <small class="form-feedback" id="classFeedback" role="status"></small>
+        </form>
+        <form class="admin-form" id="eventForm">
+          <h3>Publicar aviso</h3>
+          <label>Título do evento <input id="eventTitle" type="text" placeholder="Ex.: Reunião de responsáveis" required></label>
+          <label>Data e horário <input id="eventDate" type="text" placeholder="Ex.: 05/09, às 18h" required></label>
+          <label>Detalhes <input id="eventDetails" type="text" placeholder="Ex.: No auditório" required></label>
+          <button class="action-button" type="submit">Publicar aviso</button>
+          <small class="form-feedback" id="eventFeedback" role="status"></small>
+        </form>
+
+        <div class="admin-form" id="eventListPanel">
+          <h3>Avisos publicados</h3>
+          <div class="admin-event-list" id="adminEventList"></div>
+        </div>
+
+        <div class="admin-form" id="classListPanel">
+          <h3>Turmas cadastradas</h3>
+          <div class="admin-event-list" id="adminClassList"></div>
+        </div>
+
+        <form class="admin-form" id="readingCleanupForm">
+          <h3>Histórico da placa</h3>
+          <p class="muted">Apague leituras antigas do sensor para reduzir o histórico armazenado.</p>
+          <label>Apagar registros com mais de <span><input id="readingRetentionDays" type="number" min="1" max="3650" value="30" required> dias</span></label>
+          <button class="remove-event cleanup-button" type="submit">Apagar registros antigos</button>
+          <small class="form-feedback" id="readingCleanupFeedback" role="status"></small>
+        </form>
+
+        <div class="admin-form permissions">
+          <h3>Configuração de alertas</h3>
+          <label class="switch-row">Alertas por WhatsApp <input id="whatsappPermission" type="checkbox" checked><span class="switch"></span></label>
+          <label class="switch-row">Notificar coordenação <input id="coordPermission" type="checkbox" checked><span class="switch"></span></label>
+          <p class="muted">Permissão atual: gestor · leitura e edição</p>
+          <div class="permission-note">Ponto ativo: <strong id="pointLabel">Pátio central</strong></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<script type="module" src="admin.js"></script>
+</body>
+</html>
